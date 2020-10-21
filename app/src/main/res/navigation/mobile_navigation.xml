@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/englishToVietnamese">
+
+    <fragment
+        android:id="@+id/englishToVietnamese"
+        android:name="com.lduwcs.dictionary.ui.englishToVietnamese"
+        android:label="ENG-VIE"
+        tools:layout="@layout/fragment_english_to_vietnamese" />
+    <fragment
+        android:id="@+id/vietnameseToEnglish"
+        android:name="com.lduwcs.dictionary.ui.VietnameseToEnglish"
+        android:label="VIE-ENG"
+        tools:layout="@layout/fragment_vietnamese_to_english" />
+</navigation>
