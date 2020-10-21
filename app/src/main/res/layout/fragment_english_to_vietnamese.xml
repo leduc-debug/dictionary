@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    tools:context=".ui.englishToVietnamese">
+
+    <LinearLayout
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/ed_search"
+                android:hint="Nhập vào từ để kiểm tra"
+                android:layout_weight="1"
+                android:textColor="@color/black2"
+                android:textSize="22dp"
+                android:singleLine="true"
+                android:inputType="text"
+                android:layout_width="0dp"
+                android:imeOptions="actionSearch"
+                android:height="60dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/img_btn_voice"
+                android:layout_marginLeft="-40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_keyboard_voice_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_etov"
+            tools:listitem="@layout/word_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</FrameLayout>
