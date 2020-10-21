@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
     android:orientation="vertical"
     tools:context=".ui.englishToVietnamese">
 
     <LinearLayout
-        android:layout_margin="8dp"
+        android:padding="8dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +24,6 @@
                 android:id="@+id/ed_search"
                 android:hint="Nhập vào từ để kiểm tra"
                 android:layout_weight="1"
-                android:textColor="@color/black2"
                 android:textSize="22dp"
                 android:singleLine="true"
                 android:inputType="text"
