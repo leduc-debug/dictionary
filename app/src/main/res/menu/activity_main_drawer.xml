@@ -16,11 +16,26 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="Vietnamese-English" />
         <item
+            android:id="@+id/favoriteFragment"
             android:icon="@drawable/ic_baseline_tab_24"
             android:title="Favorites" />
         <item
+            android:id="@+id/yourWordFragment"
             android:icon="@drawable/ic_baseline_tab_24"
             android:title="Your Worlds" />
     </group>
+    <item
+        android:title="Communicate" >
+        <menu>
+            <item
+                android:id="@+id/shareFragment"
+                android:icon="@drawable/ic_baseline_share_24"
+                android:title="Share"/>
+            <item
+                android:icon="@drawable/ic_baseline_live_help_24"
+                android:title="Help"/>
+        </menu>
+    </item>
+
 
 </menu>

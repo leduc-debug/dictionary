@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            android:text="Test your pronunciation"
+            android:textSize="30dp" />
+        <TextView
+            android:id="@+id/tv_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="School"
+            android:textSize="36dp" />
+        <ImageView
+            android:id="@+id/img_pronunciation"
+            android:background="@drawable/ic_baseline_keyboard_voice_24"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+        <TextView
+            android:id="@+id/tv_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your answer: : schol"
+            android:layout_margin="10dp"
+            android:textSize="30dp" />
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score: 8"
+            android:layout_marginBottom="110dp"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

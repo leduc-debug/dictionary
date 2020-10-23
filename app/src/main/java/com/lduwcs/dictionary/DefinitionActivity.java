@@ -6,6 +6,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
@@ -20,13 +22,16 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lduwcs.dictionary.database.DatabaseAccess;
@@ -43,7 +48,12 @@ public class DefinitionActivity extends AppCompatActivity {
     private FloatingActionButton btn_speak;
     private TextToSpeech mTTS;
     private String style;
+    private int type;
+    private String word;
+    private Drawable buttonDrawable;
+    private ImageButton btn_favorite;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +62,15 @@ public class DefinitionActivity extends AppCompatActivity {
         wvDefinition = findViewById(R.id.tv_definition);
         actionBar = getSupportActionBar();
         btn_speak = findViewById(R.id.btn_speak);
-
+        btn_favorite = (ImageButton)findViewById(R.id.btn_favorite);
         getSystemTheme();
 
         //Lấy dữ liệu form kia gởi qua
         Intent intent = getIntent();
-        String word = intent.getStringExtra("WORD");
-        int type = intent.getIntExtra("TYPE",0);
+        word = intent.getStringExtra("WORD");
+        type = intent.getIntExtra("TYPE",0);
 
-        setTitle(word);
+        initToolBar(word);
 
         if(type==0) {
             DatabaseAccess dbAccess = DatabaseAccess.getInstance(this,"anh_viet");
@@ -81,30 +91,22 @@ public class DefinitionActivity extends AppCompatActivity {
           //  wvDefinition.loadDataWithBaseURL(null,style+definition,"text/html", "utf-8", null);
         }
 
-        mTTS = new TextToSpeech(getBaseContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status==TextToSpeech.SUCCESS){
-                    int result = mTTS.setLanguage(Locale.UK);
-                    if(result == TextToSpeech.LANG_MISSING_DATA
-                            || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                        Log.d("TAG", "onInit: "+ "lang not support" );
-                    }else{
-                        btn_speak.setEnabled(true);
-                    }
+        mTTS = new TextToSpeech(getBaseContext(), status -> {
+            if(status==TextToSpeech.SUCCESS){
+                int result = mTTS.setLanguage(Locale.UK);
+                if(result == TextToSpeech.LANG_MISSING_DATA
+                        || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                    Log.d("TAG", "onInit: "+ "lang not support" );
                 }else{
-                    Log.d("TAG", "onInit: "+ "dmdmdmdmd" );
+                    btn_speak.setEnabled(true);
                 }
+            }else{
+                Log.d("TAG", "onInit: "+ "dmdmdmdmd" );
             }
         });
 
 
-        btn_speak.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speak(word);
-            }
-        });
+        btn_speak.setOnClickListener(v -> speak(word));
 
     }
 
@@ -150,13 +152,51 @@ public class DefinitionActivity extends AppCompatActivity {
     }
 
 
-    public void setTitle(String title){
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void initToolBar(String title){
         TextView tv = (TextView) findViewById(R.id.tv_title_appbar);
         tv.setText(title);
-        ((Button)findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
+        ((ImageButton)findViewById(R.id.btn_back)).setOnClickListener((View.OnClickListener) v -> onBackPressed());
+
+
+        // check is word already in favorite table
+        DatabaseAccess dbAccess = DatabaseAccess.getInstance(getBaseContext(),"anh_viet");
+        dbAccess.open();
+        String id = dbAccess.getFavoriteId(word);
+        if(!id.equals("0")){
+            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
+        }else{
+            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+        }
+
+
+
+        btn_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                if (type == 0) {
+                    DatabaseAccess dbAccess1 = DatabaseAccess.getInstance(getBaseContext(), "anh_viet");
+                    dbAccess1.open();
+                    String id1 = dbAccess1.getFavoriteId(word);
+                    if (!id1.equals("0")) {
+                        // word already in favorite table
+                        // if clear success
+                        if (dbAccess1.clearFavorite(id1)) {
+                            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+                        }
+                    } else {
+                        // if add word to favorite table success
+                        if (dbAccess1.addFavorite(word)) {
+                            //change the color of ImageButton
+                            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
+                        }
+                    }
+                    dbAccess1.close();
+                } else {
+                    DatabaseAccess2 dbAccess1 = DatabaseAccess2.getInstance(getBaseContext(), "viet_anh");
+                    dbAccess1.open();
+                    dbAccess1.close();
+                }
             }
         });
     }

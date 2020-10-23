@@ -15,4 +15,23 @@
         android:name="com.lduwcs.dictionary.ui.VietnameseToEnglish"
         android:label="VIE-ENG"
         tools:layout="@layout/fragment_vietnamese_to_english" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.lduwcs.dictionary.ui.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/yourWordFragment"
+        android:name="com.lduwcs.dictionary.ui.YourWordFragment"
+        android:label="fragment_your_word"
+        tools:layout="@layout/fragment_your_word" />
+    <activity
+        android:id="@+id/yourWordActivity"
+        android:name="com.lduwcs.dictionary.YourWordActivity"
+        android:label="activity_your_word"
+        tools:layout="@layout/activity_your_word" />
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.lduwcs.dictionary.ui.ShareFragment"
+        android:label="ShareFragment" />
 </navigation>
