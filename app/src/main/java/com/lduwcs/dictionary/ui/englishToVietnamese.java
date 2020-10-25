@@ -58,6 +58,7 @@ public class englishToVietnamese extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d("TAG", "onCreateView: ");
         View root = inflater.inflate(R.layout.fragment_english_to_vietnamese, container, false);
 
         this.ed_search = (EditText) root.findViewById(R.id.ed_search);
@@ -154,4 +155,5 @@ public class englishToVietnamese extends Fragment {
 
         }
     }
+
 }

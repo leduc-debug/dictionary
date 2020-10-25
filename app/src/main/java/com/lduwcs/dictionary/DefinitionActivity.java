@@ -158,47 +158,46 @@ public class DefinitionActivity extends AppCompatActivity {
         tv.setText(title);
         ((ImageButton)findViewById(R.id.btn_back)).setOnClickListener((View.OnClickListener) v -> onBackPressed());
 
-
         // check is word already in favorite table
-        DatabaseAccess dbAccess = DatabaseAccess.getInstance(getBaseContext(),"anh_viet");
-        dbAccess.open();
-        String id = dbAccess.getFavoriteId(word);
-        if(!id.equals("0")){
-            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
-        }else{
-            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-        }
-
-
-
-        btn_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type == 0) {
-                    DatabaseAccess dbAccess1 = DatabaseAccess.getInstance(getBaseContext(), "anh_viet");
-                    dbAccess1.open();
-                    String id1 = dbAccess1.getFavoriteId(word);
-                    if (!id1.equals("0")) {
-                        // word already in favorite table
-                        // if clear success
-                        if (dbAccess1.clearFavorite(id1)) {
-                            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                        }
-                    } else {
-                        // if add word to favorite table success
-                        if (dbAccess1.addFavorite(word)) {
-                            //change the color of ImageButton
-                            btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
-                        }
-                    }
-                    dbAccess1.close();
-                } else {
-                    DatabaseAccess2 dbAccess1 = DatabaseAccess2.getInstance(getBaseContext(), "viet_anh");
-                    dbAccess1.open();
-                    dbAccess1.close();
-                }
+        if(type==0){
+            DatabaseAccess dbAccess = DatabaseAccess.getInstance(getBaseContext(),"anh_viet");
+            dbAccess.open();
+            String id = dbAccess.getFavoriteId(word);
+            if(!id.equals("0")){
+                btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
+            }else{
+                btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.white));
             }
-        });
+
+            btn_favorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (type == 0) {
+                        DatabaseAccess dbAccess1 = DatabaseAccess.getInstance(getBaseContext(), "anh_viet");
+                        dbAccess1.open();
+                        String id1 = dbAccess1.getFavoriteId(word);
+                        if (!id1.equals("0")) {
+                            // word already in favorite table
+                            // if clear success
+                            if (dbAccess1.clearFavorite(id1)) {
+                                btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+                            }
+                        } else {
+                            // if add word to favorite table success
+                            if (dbAccess1.addFavorite(word)) {
+                                //change the color of ImageButton
+                                btn_favorite.setBackgroundTintList(getResources().getColorStateList(R.color.yellow));
+                            }
+                        }
+                        dbAccess1.close();
+                    } else {
+                        DatabaseAccess2 dbAccess1 = DatabaseAccess2.getInstance(getBaseContext(), "viet_anh");
+                        dbAccess1.open();
+                        dbAccess1.close();
+                    }
+                }
+            });
+        }
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -226,4 +225,5 @@ public class DefinitionActivity extends AppCompatActivity {
                 break;
         }
     }
+
 }

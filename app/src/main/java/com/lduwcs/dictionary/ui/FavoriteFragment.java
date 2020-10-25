@@ -44,6 +44,7 @@ public class FavoriteFragment extends Fragment {
         for(String id :ids){
             words.add(databaseAccess.getWord(id));
         }
+        databaseAccess.close();
         recyclerViewAdapter = new RecyclerViewAdapter(words,getContext(),0);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -52,4 +53,20 @@ public class FavoriteFragment extends Fragment {
 
         return root;
     }
+
+    @Override
+    public void onResume() {
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext(),"anh_viet");
+        databaseAccess.open();
+        ArrayList<String> ids =  databaseAccess.getFavoriteIds();
+        words.clear();
+
+        for(String id :ids){
+            words.add(databaseAccess.getWord(id));
+        }
+        databaseAccess.close();
+        recyclerViewAdapter.notifyDataSetChanged();
+        super.onResume();
+    }
+
 }

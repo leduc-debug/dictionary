@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lduwcs.dictionary.R;
+import com.lduwcs.dictionary.database.DatabaseAccess;
 import com.lduwcs.dictionary.ui.YourWordFragment;
 
 import java.util.ArrayList;
@@ -33,13 +34,14 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderAdap
         words.get(position).setAnswer(yAnswer);
         words.get(position).setScore(getScore(words.get(position).getWord(),yAnswer));
         words.get(position).isDone=true;
-        yourWordFragment.initNewWordTest();
+        if(position==words.size()-1)
+            yourWordFragment.initNewWordTest();
         notifyItemChanged(position);
     }
 
     private int getScore(String s1, String s2){
         if(s1.equals(s2)) return 10;
-        return (int)((Math.random()+1)*8);
+        return (int)((Math.random())*6);
     }
 
     @NonNull
@@ -69,6 +71,8 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderAdap
         return words.size();
     }
 
+
+
     public class SliderAdapterViewHolder  extends  RecyclerView.ViewHolder{
 
         public TextView tv_word;
@@ -84,4 +88,5 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderAdap
             img_pronunciation = (ImageView) itemView.findViewById(R.id.img_pronunciation);
         }
     }
+
 }

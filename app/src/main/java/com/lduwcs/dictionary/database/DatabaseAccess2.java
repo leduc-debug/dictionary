@@ -38,12 +38,9 @@ public class DatabaseAccess2 {
 
     public List<String> getWords() {
         List<String> list = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME , null);
+        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME +" limit 10", null);
         cursor.moveToFirst();
-        int i=0;
         while (!cursor.isAfterLast()) {
-            i+=1;
-            if(i>=15) break;
             list.add(cursor.getString(1));
             cursor.moveToNext();
         }
@@ -54,10 +51,7 @@ public class DatabaseAccess2 {
         ArrayList<String> list = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME+" where word like '"+ filter +"%' limit 10", null);
         cursor.moveToFirst();
-        int i=0;
         while (!cursor.isAfterLast()) {
-            i+=1;
-            if(i>=15) break;
             list.add(cursor.getString(1));
             cursor.moveToNext();
         }

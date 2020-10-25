@@ -56,7 +56,7 @@ public class VietnameseToEnglish extends Fragment {
         this.recyclerView = (RecyclerView) root.findViewById(R.id.rc_etov);
         DatabaseAccess2 databaseAccess2= DatabaseAccess2.getInstance(getContext(),"viet_anh");
         databaseAccess2.open();
-        List<String> anhViet = databaseAccess2.getWords();
+        List<String> anhViet = databaseAccess2.getWords("a");
         String shortDefinition="";
         words = new ArrayList<>();
         for(String w : anhViet){

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lduwcs.dictionary.R;
+import com.lduwcs.dictionary.database.DatabaseAccess;
 import com.lduwcs.dictionary.viewpage.SliderAdapter;
 import com.lduwcs.dictionary.viewpage.WordItemViewPage;
 
@@ -47,7 +48,7 @@ public class YourWordFragment extends Fragment {
         viewPager2 = (ViewPager2) root.findViewById(R.id.vp_yourWord);
 
 
-        words.add(new WordItemViewPage("hello","",0));
+        words.add(new WordItemViewPage(randomWord(),"",0));
 
         sliderAdapter = new SliderAdapter(words,getContext(),this);
         viewPager2.setAdapter(sliderAdapter);
@@ -90,8 +91,16 @@ public class YourWordFragment extends Fragment {
     }
 
     public void initNewWordTest(){
-        words.add(new WordItemViewPage("dm22","",0));
+        words.add(new WordItemViewPage(randomWord(),"",0));
         sliderAdapter.notifyDataSetChanged();
+    }
+
+    private String randomWord(){
+        int id =(int)((Math.random()+1)*2000);
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext(),"anh_viet");
+        databaseAccess.open();
+        String s = databaseAccess.getWord(id+"").getTitle();
+        return s;
     }
 
 }
